@@ -7,6 +7,9 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import Library from './pages/Library';
 import Playlist from './pages/Playlist';
+import Upload from "./pages/Upload";
+// ...
+
 
 export default function App() {
   return (
@@ -22,6 +25,7 @@ export default function App() {
                   <Route path="/search" element={<Search />} />
                   <Route path="/library" element={<Library />} />
                   <Route path="/playlist/:id" element={<Playlist />} />
+                  <Route path="/upload" element={<Upload />} />
                 </Routes>
               </main>
             </div>

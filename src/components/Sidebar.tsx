@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from 'react';
-import { Home, Search, Library, Plus } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { usePlaylists } from '../context/PlaylistContext';
+import { Home, Search, Library, Plus, Upload as UploadIcon } from "lucide-react";
+// ...
+
 
 export default function Sidebar() {
   const { playlists, createPlaylist } = usePlaylists();
@@ -32,6 +34,9 @@ export default function Sidebar() {
         <NavLink to="/library" className={linkClass}>
           <Library size={20} /> Your Library
         </NavLink>
+        <NavLink to="/upload" className={linkClass}>
+          <UploadIcon size={20} /> Upload
+</NavLink>
       </nav>
 
       <div className="playlist-section">
