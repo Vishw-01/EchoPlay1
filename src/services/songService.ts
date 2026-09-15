@@ -87,9 +87,8 @@ export async function uploadSong({
     src: data.audio_url,
     duration: data.duration,
   };
-
-  export async function deleteSong(id: string | number): Promise<void> {
-    const { error } = await supabase.from("songs").delete().eq("id", id);
-    if (error) throw error;
-  }
+}
+export async function deleteSong(id: string | number): Promise<void> {
+  const { error } = await supabase.from("songs").delete().eq("id", id);
+  if (error) throw error;
 }
