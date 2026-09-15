@@ -60,6 +60,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     const idx = songList.findIndex((s) => s.id === song.id);
     setQueue(songList);
     setCurrentIndex(idx === -1 ? 0 : idx);
+    setProgress(0);
     setIsPlaying(true);
   };
 
@@ -67,7 +68,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const playNext = () => {
     if (queue.length === 0) return;
-    setCurrentIndex((i) => (i + 1) % queue.length);
+    if (queue.length === 1) {
+      // restart the same song from the beginning
+      audioRef.current.currentTime = 0;
+      setProgress(0);
+      audioRef.current.play();
+      return;
+    }
+    const nextIndex = (currentIndex + 1) % queue.length;
+    setCurrentIndex(nextIndex);
+    setProgress(0);
     setIsPlaying(true);
   };
 
