@@ -1,23 +1,18 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from 'react';
-import type { Playlist } from '../types';
-import { playlists as initialPlaylists } from '../data/songs';
+import { createContext, useContext, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import type { Playlist } from "../types";
+import { playlists as initialPlaylists } from "../data/songs";
 
 type PlaylistContextType = {
   playlists: Playlist[];
   createPlaylist: (name: string) => void;
-  addSongToPlaylist: (playlistId: string, songId: number) => void;
-  removeSongFromPlaylist: (playlistId: string, songId: number) => void;
+  addSongToPlaylist: (playlistId: string, songId: string | number) => void;
+  removeSongFromPlaylist: (playlistId: string, songId: string | number) => void;
   deletePlaylist: (playlistId: string) => void;
 };
 
 const PlaylistContext = createContext<PlaylistContextType | null>(null);
-const STORAGE_KEY = 'echoplay-playlists';
+const STORAGE_KEY = "echoplay-playlists";
 
 export function PlaylistProvider({ children }: { children: ReactNode }) {
   const [playlists, setPlaylists] = useState<Playlist[]>(() => {
@@ -47,7 +42,7 @@ export function PlaylistProvider({ children }: { children: ReactNode }) {
     setPlaylists((prev) => [...prev, newPlaylist]);
   };
 
-  const addSongToPlaylist = (playlistId: string, songId: number) => {
+  const addSongToPlaylist = (playlistId: string, songId: string | number) => {
     setPlaylists((prev) =>
       prev.map((p) =>
         p.id === playlistId && !p.songIds.includes(songId)
@@ -57,7 +52,7 @@ export function PlaylistProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  const removeSongFromPlaylist = (playlistId: string, songId: number) => {
+  const removeSongFromPlaylist = (playlistId: string, songId: string | number) => {
     setPlaylists((prev) =>
       prev.map((p) =>
         p.id === playlistId
@@ -73,13 +68,7 @@ export function PlaylistProvider({ children }: { children: ReactNode }) {
 
   return (
     <PlaylistContext.Provider
-      value={{
-        playlists,
-        createPlaylist,
-        addSongToPlaylist,
-        removeSongFromPlaylist,
-        deletePlaylist,
-      }}
+      value={{ playlists, createPlaylist, addSongToPlaylist, removeSongFromPlaylist, deletePlaylist }}
     >
       {children}
     </PlaylistContext.Provider>
@@ -88,7 +77,6 @@ export function PlaylistProvider({ children }: { children: ReactNode }) {
 
 export const usePlaylists = () => {
   const ctx = useContext(PlaylistContext);
-  if (!ctx)
-    throw new Error('usePlaylists must be used within PlaylistProvider');
+  if (!ctx) throw new Error("usePlaylists must be used within PlaylistProvider");
   return ctx;
 };

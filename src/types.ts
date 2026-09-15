@@ -11,5 +11,5 @@ export type Song = {
 export type Playlist = {
   id: string;
   name: string;
-  songIds: number[];
+  songIds: (string | number)[];
 };

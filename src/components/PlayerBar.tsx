@@ -18,8 +18,8 @@ export default function PlayerBar() {
     return <div className="player-bar empty">No song playing</div>;
   }
 
-  const formatTime = (s) =>
-    `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  const formatTime = (s: number) =>
+  `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
   return (
     <div className="player-bar">

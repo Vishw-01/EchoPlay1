@@ -1,14 +1,6 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-
-type Song = {
-  id: number;
-  title: string;
-  artist: string;
-  album: string;
-  cover: string;
-  src: string;
-  duration: number;
-};
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import type { Song } from "../types";
 
 type PlayerContextType = {
   currentSong: Song | null;
