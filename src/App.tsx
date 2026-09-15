@@ -1,21 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import PlayerBar from './components/PlayerBar';
-import { PlayerProvider } from './context/PlayerContext';
-import { PlaylistProvider } from './context/PlaylistContext';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import Library from './pages/Library';
-import Playlist from './pages/Playlist';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import PlayerBar from "./components/PlayerBar";
+import { PlayerProvider } from "./context/PlayerContext";
+import { PlaylistProvider } from "./context/PlaylistContext";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
+import Library from "./pages/Library";
+import Playlist from "./pages/Playlist";
 import Upload from "./pages/Upload";
-// ...
-
 
 export default function App() {
   return (
     <PlaylistProvider>
       <PlayerProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <div className="app">
             <div className="main-row">
               <Sidebar />
