@@ -3,9 +3,10 @@ import type { Song } from "../types";
 
 export async function fetchSongs(): Promise<Song[]> {
   const { data, error } = await supabase
-    .from("songs")
-    .select("*")
-    .order("created_at", { ascending: false });
+  .from("songs")
+  .select("*")
+  .order("position", { ascending: true, nullsFirst: false })
+  .order("created_at", { ascending: false });
 
   if (error) throw error;
 
@@ -72,6 +73,7 @@ export async function uploadSong({
       audio_url: audioUrl,
       cover_url: coverUrl,
       duration,
+      position: Date.now(),
     })
     .select()
     .single();
@@ -91,4 +93,14 @@ export async function uploadSong({
 export async function deleteSong(id: string | number): Promise<void> {
   const { error } = await supabase.from("songs").delete().eq("id", id);
   if (error) throw error;
+}
+
+export async function saveSongOrder(songs: Song[]): Promise<void> {
+  const results = await Promise.all(
+    songs.map((s, index) =>
+      supabase.from("songs").update({ position: index }).eq("id", s.id)
+    )
+  );
+  const failed = results.find((r) => r.error);
+  if (failed?.error) throw failed.error;
 }
